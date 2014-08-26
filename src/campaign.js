@@ -9,7 +9,7 @@ var get = Promise.promisify(needle.get, needle);
 
 exports.getUrlByHost = function (host, next) {
   return getCampaign(host).then(function (campaign) {
-    return config.get('app:base') + '/' + config.get('app:path') + '?campaign=' + campaign.id;
+    return config.get('app:base') + config.get('app:path') + '?campaign=' + campaign.id;
   })
   .nodeify(next);
 };
