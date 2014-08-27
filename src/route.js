@@ -3,6 +3,14 @@
 module.exports = function (server) {
 
   server.route({
+    method: 'get',
+    path: '/ping',
+    handler: function (request, reply) {
+      reply();
+    }
+  });
+
+  server.route({
     method: '*',
     path: '/{p*}',
     handler: function (request, reply) {
