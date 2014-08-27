@@ -1,4 +1,10 @@
 language: node_js
 node_js:
-- '0.11'
 - '0.10'
+deploy:
+  provider: heroku
+  api_key:
+    secure: czl8OmP9ItKKFNcw/lvFmEO22NZn1c23BPVdhJYm0MHSRYqw6m+kVo4rgeU7haXAto0wN0pmf6DZH0wEMmuIJeUkXcpwn4nOfbxLWexsQUprCxisWD/+5LWY1fqLCFDMh4TZAow+8j3ObGHhn754F9sE9DAnCQiKZiqUHZxRY+0=
+  app: valet-io-domains
+  on:
+    repo: valet-io/domains
