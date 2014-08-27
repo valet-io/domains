@@ -16,7 +16,7 @@ module.exports = function (server) {
     handler: function (request, reply) {
       server.methods.getLocation(request.info.host, function (err, location) {
         if (err) return reply(err);
-        return reply().redirect(location)
+        return reply().redirect(location);
       });
     }
   });
