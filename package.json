@@ -34,5 +34,8 @@
     "nock": "0",
     "sinon": "1",
     "sinon-chai": "2"
+  },
+  "engine": {
+    "node": "0.10"
   }
 }
