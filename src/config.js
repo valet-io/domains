@@ -7,5 +7,5 @@ module.exports = require('nconf')
     whitelist: ['port', 'app__base', 'app__path', 'api']
   })
   .defaults({
-    port: process.env.PORT || 0
+    port: 0
   });

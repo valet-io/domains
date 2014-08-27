@@ -2,9 +2,10 @@ language: node_js
 node_js:
 - '0.10'
 deploy:
-  provider: heroku
-  api_key:
-    secure: czl8OmP9ItKKFNcw/lvFmEO22NZn1c23BPVdhJYm0MHSRYqw6m+kVo4rgeU7haXAto0wN0pmf6DZH0wEMmuIJeUkXcpwn4nOfbxLWexsQUprCxisWD/+5LWY1fqLCFDMh4TZAow+8j3ObGHhn754F9sE9DAnCQiKZiqUHZxRY+0=
-  app: valet-io-domains
+  provider: opsworks
+  access_key_id: AKIAJWHKSVOBMVTXVHLA
+  secret_access_key:
+    secure: DmVd2ghjYIxy8pL454M0RCmd7z4wVI/hodAs3ZneSeIbQfRT4yWSghF2AWENEYCJLyQ2IJSwLsmP4DLQf7QYv0mQSdxSx412od7i5JqNDrlJQHitTN87ywo+FJPFrqgudTKI0gzHcylHcf6gOS/P6djVK0yPovxrGz3uEn2iNtM=
+  app-id: d20acb42-0e93-4292-bcda-7cdf1c3064a0
   on:
     repo: valet-io/domains
