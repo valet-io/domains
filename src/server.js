@@ -3,7 +3,7 @@
 var hapi     = require('hapi');
 var campaign = require('./campaign');
 var config   = require('./config');
-var server   = new hapi.Server('0.0.0.0', 80, {
+var server   = new hapi.Server('0.0.0.0', +config.get('port'), {
   cache: require('catbox-memory')
 });
 
@@ -17,7 +17,8 @@ server.pack.register({
   plugin: require('good'),
   options: {
     subscribers: {
-      'udp://logs.papertrailapp.com:44076': ['request', 'log'],
+      'udp://logs.papertrailapp.com:44076': ['request', 'log', 'info'],
+      '/tmp/logs/': ['request', 'log', 'info'],
       console: ['request', 'log', 'error']
     }
   }
