@@ -3,7 +3,7 @@
 var hapi     = require('hapi');
 var campaign = require('./campaign');
 var config   = require('./config');
-var server   = new hapi.Server('0.0.0.0', +config.get('port'), {
+var server   = new hapi.Server('0.0.0.0', 80, {
   cache: require('catbox-memory')
 });
 
