@@ -18,7 +18,6 @@ server.pack.register({
   options: {
     subscribers: {
       'udp://logs.papertrailapp.com:44076': ['request', 'log'],
-      '/tmp/logs/': ['request', 'log'],
       console: ['request', 'log', 'error']
     }
   }
