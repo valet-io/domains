@@ -17,7 +17,7 @@ server.pack.register({
   plugin: require('good'),
   options: {
     subscribers: {
-      'udp://logs.papertrailapp.com:44076': ['request', 'log'],
+      'udp://logs.papertrailapp.com:44076': ['request', 'log', 'error'],
       console: ['request', 'log', 'error']
     }
   }

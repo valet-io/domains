@@ -14,6 +14,9 @@ module.exports = function (server) {
     method: '*',
     path: '/{p*}',
     handler: function (request, reply) {
+      server.log(['redirect'], {
+        from: request.info.host
+      });
       server.methods.getLocation(request.info.host, function (err, location) {
         if (err) return reply(err);
         return reply().redirect(location);
