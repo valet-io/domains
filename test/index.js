@@ -68,6 +68,20 @@ describe('Domain Redirection', function () {
       }, function (response) {
         expect(response.statusCode).to.equal(302);
         expect(response.headers.location).to.equal('https://base/pledges/create?campaign=' + uuid);
+        server.methods.getLocation.cache.drop('host.org', done);
+      });
+    });
+
+    it('strips www', function (done) {
+      api.get('/campaigns?host=host.org').reply(200, [{id: uuid}]);
+      server.inject({
+        url: '/',
+        headers: {
+          Host: 'www.host.org'
+        }
+      }, function (response) {
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('https://base/pledges/create?campaign=' + uuid);
         done();
       });
     });
