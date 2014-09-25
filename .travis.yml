@@ -9,3 +9,6 @@ deploy:
   app-id: 02853842-bc6c-4b64-ac60-c0d3898c9064
   on:
     repo: valet-io/domains
+notifications:
+  slack:
+    secure: ZHzltq6ZqJ6mh1CIJxXWlJaZOBVs0NKEvwrKERVAMKpdFmWZtK1JVfeesIz13tWenQAKi2xk7bTFp0Oo0JAF2fYAsHSscnDS6o8RAXCM7PJV8jnfl1C0qMHKYoMrZ5lTxGHHGUPmQdRqPX13P3KR0r4crVAw1tdKwluRg4/hOOc=
