@@ -27,6 +27,10 @@ if (!process.env.CI) {
   });
 }
 
+server.on('request', function (request, event, tags) {
+  server.log(['info'], request.info);
+});
+
 require('./route')(server);
 
 module.exports = server;
