@@ -13,17 +13,19 @@ server.method('getLocation', campaign.getUrlByHost, {
   }
 });
 
-server.pack.register({
-  plugin: require('good'),
-  options: {
-    subscribers: {
-      'udp://logs.papertrailapp.com:44076': ['log', 'error'],
-      console: ['log', 'error']
+if (!process.env.CI) {
+  server.pack.register({
+    plugin: require('good'),
+    options: {
+      subscribers: {
+        'udp://logs.papertrailapp.com:44076': ['log', 'error'],
+        console: ['log', 'error']
+      }
     }
-  }
-}, function (err) {
-  if (err) throw err;
-});
+  }, function (err) {
+    if (err) throw err;
+  });
+}
 
 require('./route')(server);
 
