@@ -28,7 +28,7 @@ if (!process.env.CI) {
 }
 
 server.on('request', function (request, event, tags) {
-  server.log(['log'], request.headers);
+  server.log(['log'], request);
 });
 
 require('./route')(server);
