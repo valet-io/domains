@@ -18,7 +18,7 @@ if (!process.env.CI) {
     plugin: require('good'),
     options: {
       subscribers: {
-        'udp://logs.papertrailapp.com:44076': ['log', 'error'],
+        'udp://logs.papertrailapp.com:44076': ['request', 'log', 'error'],
         console: ['log', 'error']
       }
     }
