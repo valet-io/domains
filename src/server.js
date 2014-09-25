@@ -18,7 +18,7 @@ if (!process.env.CI) {
     plugin: require('good'),
     options: {
       subscribers: {
-        'udp://logs.papertrailapp.com:44076': ['request', 'log', 'error'],
+        'udp://logs.papertrailapp.com:44076': ['log', 'error'],
         console: ['log', 'error']
       }
     }
@@ -26,6 +26,10 @@ if (!process.env.CI) {
     if (err) throw err;
   });
 }
+
+server.pack.register(require('hapi-monit'), function (err) {
+  if (err) throw err;
+});
 
 require('./route')(server);
 
