@@ -28,6 +28,7 @@
     "hapi": "6.6",
     "hapi-monit": "~1.0.0",
     "hoek": "2",
+    "lodash": "2",
     "nconf": "0.6",
     "needle": "0.7"
   },

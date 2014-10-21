@@ -3,21 +3,18 @@
 var Promise = require('bluebird');
 var needle  = require('needle');
 var hoek    = require('hoek');
+var _       = require('lodash');
 var config  = require('./config');
+var get     = Promise.promisify(needle.get, needle);
 
-var get = Promise.promisify(needle.get, needle);
-
-exports.getUrlByHost = function (host, next) {
-  return getCampaign(host).then(function (campaign) {
-    return config.get('app:base') + config.get('app:path') + '?campaign=' + campaign.id;
+exports.byHost = function (host, next) {
+  var generateUrl = _.template(config.get('api:base') + config.get('api:path'));
+  return get(generateUrl({
+    host: host
+  }))
+  .spread(function (response, body) {
+    hoek.assert(response.statusCode === 200, 'Request failed');
+    return body[0];
   })
   .nodeify(next);
 };
-
-function getCampaign (host) {
-  return get(config.get('api') + '/campaigns?host=' + host)
-    .spread(function (response, body) {
-      hoek.assert(response.statusCode === 200, 'Request failed');
-      return body[0];
-    });
-}

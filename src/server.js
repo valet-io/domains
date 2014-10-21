@@ -7,7 +7,7 @@ var server   = new hapi.Server('0.0.0.0', +config.get('port'), {
   cache: require('catbox-memory')
 });
 
-server.method('getLocation', campaign.getUrlByHost, {
+server.method('getCampaignByHost', campaign.byHost, {
   cache: {
     expiresIn: 86400000
   }
