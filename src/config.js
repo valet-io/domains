@@ -3,8 +3,7 @@
 module.exports = require('nconf')
   .use('memory')
   .env({
-    separator: '__',
-    whitelist: ['port', 'app__base', 'app__path', 'api']
+    separator: '__'
   })
   .defaults({
     port: 0
