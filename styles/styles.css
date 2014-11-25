@@ -1,0 +1,33 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.dns {
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+
+.dns th {
+  font-weight: normal;
+  text-align: left;
+  padding: 10px;
+  padding-right: 40px;
+  color: white;
+  background: #6DB1DE;
+}
+
+.dns tbody td {
+  padding: 10px;
+  padding-right: 40px;
+  border-bottom: 2px solid #BFBFBF;
+}

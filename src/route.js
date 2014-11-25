@@ -22,8 +22,8 @@ module.exports = function (server) {
       if (/^www./.test(host) || /^projector./.test(host)) {
         var parts = host.split('.');
         parsedHost = {
-          subdomain: parts[0],
-          base: parts.slice(1, parts.length).join('.')
+          subdomain: parts.length === 1 ? void 0 : parts[0],
+          base: parts.length === 1 ? parts[0] : parts.slice(1, parts.length).join('.')
         };
       }
       else {
@@ -40,7 +40,6 @@ module.exports = function (server) {
           campaign: campaign
         });
       }
-
       if (parsedHost.base === config.get('self:host')) {
         reply.file(__dirname + '/index.html');
       }
@@ -53,6 +52,16 @@ module.exports = function (server) {
             reply().redirect(generateUrl(campaign));
           }
         });
+      }
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/styles/{param*}',
+    handler: {
+      directory: {
+        path: 'styles'
       }
     }
   });
