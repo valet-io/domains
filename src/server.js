@@ -1,35 +1,39 @@
 'use strict';
 
 var hapi     = require('hapi');
-var campaign = require('./campaign');
 var config   = require('./config');
-var server   = new hapi.Server('0.0.0.0', +config.get('port'), {
-  cache: require('catbox-memory')
+var server   = new hapi.Server({
+  cache: require('catbox-memory'),
+  app: config
 });
 
-server.method('getCampaignByHost', campaign.byHost, {
-  cache: {
-    expiresIn: 86400000
-  }
-});
+server.connection({port: server.settings.app.get('port')});
 
 if (!process.env.CI) {
-  server.pack.register({
-    plugin: require('good'),
+  server.register({
+    register: require('good'),
     options: {
-      subscribers: {
-        'udp://logs.papertrailapp.com:44076': ['log', 'error'],
-        console: ['log', 'error']
-      }
+      reporters: [{
+        reporter: require('good-console'),
+        args: [{log: '*', error: '*'}]
+      }]
     }
-  }, function (err) {
+  },
+  function (err) {
     if (err) throw err;
   });
 }
 
-server.pack.register(require('hapi-monit'), function (err) {
+server.register(require('hapi-monit'), function (err) {
   if (err) throw err;
 });
+
+server.register([
+  require('./campaign'),
+  require('./url')
+], function (err) {
+  if (err) throw err;
+})
 
 require('./route')(server);
 

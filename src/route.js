@@ -15,54 +15,26 @@ module.exports = function (server) {
 
   server.route({
     method: '*',
+    vhost: server.settings.app.get('host'),
     path: '/{p*}',
-    handler: function (request, reply) {
-      var host = request.info.host;
-      var parsedHost;
-      if (/^www./.test(host) || /^projector./.test(host)) {
-        var parts = host.split('.');
-        parsedHost = {
-          subdomain: parts.length === 1 ? void 0 : parts[0],
-          base: parts.length === 1 ? parts[0] : parts.slice(1, parts.length).join('.')
-        };
-      }
-      else {
-        parsedHost = {
-          base: host
-        };
-      }
-
-      var appUrl = _.template(config.get('app:base') + config.get('app:path'));
-      var projectorUrl = _.template(config.get('projector:base') + config.get('projector:path'));
-
-      function generateUrl (campaign) {
-        return (parsedHost.subdomain === 'projector' ? projectorUrl : appUrl)({
-          campaign: campaign
-        });
-      }
-      if (parsedHost.base === config.get('self:host')) {
-        reply.file(__dirname + '/index.html');
-      }
-      else {
-        server.methods.getCampaignByHost(parsedHost.base, function (err, campaign) {
-          if (err) {
-            reply(err);
-          }
-          else {
-            reply().redirect(generateUrl(campaign));
-          }
-        });
+    handler: {
+      directory: {
+        path: 'public',
+        index: true
       }
     }
   });
 
   server.route({
-    method: 'GET',
-    path: '/styles/{param*}',
-    handler: {
-      directory: {
-        path: 'styles'
-      }
+    method: '*',
+    path: '/',
+    handler: function (request, reply) {
+      var host = request.info.host;
+      var parsed = server.methods.parseHost(request.info.host);
+      server.methods.getCampaignByDomain(parsed.domain, function (err, campaign) {
+        if (err) return reply(err);
+        reply.redirect(server.methods.destination(parsed, campaign));
+      });
     }
   });
 
