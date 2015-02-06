@@ -58,7 +58,7 @@ describe('Domain Redirection', function () {
       }, function (response) {
         expect(response.statusCode).to.equal(302);
         expect(response.headers.location).to.equal('https://pledge.valet.io/pledges/create?campaign=' + uuid);
-        server.methods.getCampaignByDomain.cache.drop('host.org', done);
+        server.methods.campaign.getByDomain.cache.drop('host.org', done);
       });
     });
 
@@ -78,7 +78,7 @@ describe('Domain Redirection', function () {
       }, function (response) {
         expect(response.statusCode).to.equal(302);
         expect(response.headers.location).to.equal('https://pledge.valet.io/pledges/create?campaign=' + uuid);
-        server.methods.getCampaignByDomain.cache.drop('host.org', done);
+        server.methods.campaign.getByDomain.cache.drop('host.org', done);
       });
     });
 
@@ -98,7 +98,7 @@ describe('Domain Redirection', function () {
       }, function (response) {
         expect(response.statusCode).to.equal(302);
         expect(response.headers.location).to.equal('https://app.valet.io/campaigns/' + uuid + '/projector');
-        server.methods.getCampaignByDomain.cache.drop('host.org', done);
+        server.methods.campaign.getByDomain.cache.drop('host.org', done);
       });
     });
 

@@ -23,6 +23,14 @@ if (!process.env.CI) {
 
 server.register(require('hapi-monit'), throwIf);
 
+server.route({
+  method: 'get',
+  path: '/ping',
+  handler: function (request, reply) {
+    reply();
+  }
+});
+
 server.register({
   register: require('./instructions')
 },
@@ -32,12 +40,12 @@ server.register({
   }
 }, throwIf);
 
-server.register([
-  require('./campaign'),
-  require('./url')
-], throwIf);
-
-require('./route')(server);
+server.register({
+  register: require('./redirect'),
+  options: {
+    templates: config.get('templates')
+  }
+}, throwIf);
 
 module.exports = server;
 
