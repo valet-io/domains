@@ -18,23 +18,29 @@ if (!process.env.CI) {
         args: [{log: '*', error: '*'}]
       }]
     }
-  },
-  function (err) {
-    if (err) throw err;
-  });
+  }, throwIf);
 }
 
-server.register(require('hapi-monit'), function (err) {
-  if (err) throw err;
-});
+server.register(require('hapi-monit'), throwIf);
+
+server.register({
+  register: require('./instructions')
+},
+{
+  routes: {
+    vhost: config.get('host')
+  }
+}, throwIf);
 
 server.register([
   require('./campaign'),
   require('./url')
-], function (err) {
-  if (err) throw err;
-})
+], throwIf);
 
 require('./route')(server);
 
 module.exports = server;
+
+function throwIf (err) {
+  if (err) throw err;
+}

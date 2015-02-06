@@ -15,18 +15,6 @@ module.exports = function (server) {
 
   server.route({
     method: '*',
-    vhost: server.settings.app.get('host'),
-    path: '/{p*}',
-    handler: {
-      directory: {
-        path: 'public',
-        index: true
-      }
-    }
-  });
-
-  server.route({
-    method: '*',
     path: '/',
     handler: function (request, reply) {
       var host = request.info.host;
