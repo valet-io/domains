@@ -33,9 +33,7 @@
     "hapi": "~8.1.0",
     "hapi-monit": "~2.0.0",
     "hoek": "~2.11.0",
-    "lodash.template": "~3.0.1",
-    "nconf": "0.6",
-    "needle": "0.7"
+    "lodash.template": "~3.0.1"
   },
   "devDependencies": {
     "chai": "1",
