@@ -8,8 +8,28 @@ exports.register = function (server, options, next) {
       templates[name] = template(options.templates[name]);
       return templates;
     }, {}));
-
-  server.expose('subdomains', ['www', 'projector']);
+  server.expose('subdomains', {
+    '': {
+      app: 'pledge',
+      test: false
+    },
+    www: {
+      app: 'pledge',
+      test: false
+    },
+    test: {
+      app: 'pledge',
+      test: true
+    },
+    projector: {
+      app: 'projector',
+      test: false
+    },
+    'projector-test': {
+      app: 'projector',
+      test: true
+    }
+  });
 
   server.bind(server.plugins.redirect);
   var methods = require('./methods');

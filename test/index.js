@@ -10,8 +10,8 @@ describe('Domain Redirection', function () {
   var api, server;
   before(function (done) {
     config.set('templates.api', 'https://api.valet.io/domains/${domain.name}?expand[]=campaign');
-    config.set('templates.pledge', 'https://pledge.valet.io/pledges/create?campaign=${campaign.id}');
-    config.set('templates.projector', 'https://app.valet.io/campaigns/${campaign.id}/projector');
+    config.set('templates.pledge', 'https://pledge.valet.io/pledges/create?campaign=${campaign.id}&test=${test}');
+    config.set('templates.projector', 'https://app.valet.io/campaigns/${campaign.id}/projector?test=${test}');
     config.set('host', 'thehost');
     api = nock('https://api.valet.io');
     server = require('../src/server');
@@ -57,7 +57,27 @@ describe('Domain Redirection', function () {
         }
       }, function (response) {
         expect(response.statusCode).to.equal(302);
-        expect(response.headers.location).to.equal('https://pledge.valet.io/pledges/create?campaign=' + uuid);
+        expect(response.headers.location).to.equal('https://pledge.valet.io/pledges/create?campaign=' + uuid + '&test=0');
+        server.methods.campaign.getByDomain.cache.drop('host.org', done);
+      });
+    });
+
+    it('gets redirects to the app test mode', function (done) {
+      api.get('/domains/host.org?expand[]=campaign').reply(200, {
+        name: 'host.org',
+        campaign_id: uuid,
+        campaign: {
+          id: uuid
+        }
+      });
+      server.inject({
+        url: '/',
+        headers: {
+          Host: 'test.host.org'
+        }
+      }, function (response) {
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('https://pledge.valet.io/pledges/create?campaign=' + uuid + '&test=1');
         server.methods.campaign.getByDomain.cache.drop('host.org', done);
       });
     });
@@ -77,7 +97,7 @@ describe('Domain Redirection', function () {
         }
       }, function (response) {
         expect(response.statusCode).to.equal(302);
-        expect(response.headers.location).to.equal('https://pledge.valet.io/pledges/create?campaign=' + uuid);
+        expect(response.headers.location).to.equal('https://pledge.valet.io/pledges/create?campaign=' + uuid  + '&test=0');
         server.methods.campaign.getByDomain.cache.drop('host.org', done);
       });
     });
@@ -97,7 +117,27 @@ describe('Domain Redirection', function () {
         }
       }, function (response) {
         expect(response.statusCode).to.equal(302);
-        expect(response.headers.location).to.equal('https://app.valet.io/campaigns/' + uuid + '/projector');
+        expect(response.headers.location).to.equal('https://app.valet.io/campaigns/' + uuid + '/projector?test=0');
+        server.methods.campaign.getByDomain.cache.drop('host.org', done);
+      });
+    });
+
+    it('redirects to the projector test mode', function (done) {
+      api.get('/domains/host.org?expand[]=campaign').reply(200, {
+        name: 'host.org',
+        campaign_id: uuid,
+        campaign: {
+          id: uuid
+        }
+      });
+      server.inject({
+        url: '/',
+        headers: {
+          Host: 'projector-test.host.org'
+        }
+      }, function (response) {
+        expect(response.statusCode).to.equal(302);
+        expect(response.headers.location).to.equal('https://app.valet.io/campaigns/' + uuid + '/projector?test=1');
         server.methods.campaign.getByDomain.cache.drop('host.org', done);
       });
     });

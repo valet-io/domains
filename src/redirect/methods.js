@@ -6,7 +6,8 @@ var got     = Promise.promisifyAll(require('got'));
 require('array.prototype.find');
 
 exports.parse = function parseHost (rawHost) {
-  var subdomain = this.subdomains.find(function (subdomain) {
+  var subdomains = Object.keys(this.subdomains);
+  var subdomain = subdomains.find(function (subdomain) {
     return new RegExp('^' + subdomain + '\\.').test(rawHost);
   });
   if (subdomain) {
@@ -43,8 +44,9 @@ exports.getCampaignByDomain = function getCampaignByDomain (domainName, next) {
 };
 
 exports.destination = function redirectDestination (subdomain, campaign) {
-  var app = (subdomain === 'projector') ? 'projector' : 'pledge';
-  return this.templates[app]({
-    campaign: campaign
+  var subdomainConfig = this.subdomains[subdomain || ''];
+  return this.templates[subdomainConfig.app]({
+    campaign: campaign,
+    test: ~~subdomainConfig.test
   });
 };
