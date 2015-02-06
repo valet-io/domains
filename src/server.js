@@ -9,19 +9,29 @@ var server   = new hapi.Server({
 
 server.connection({port: server.settings.app.get('port')});
 
-if (!process.env.CI) {
-  server.register({
-    register: require('good'),
-    options: {
-      reporters: [{
-        reporter: require('good-console'),
-        args: [{log: '*', error: '*'}]
-      }]
-    }
-  }, throwIf);
+var reporters = [
+  {
+    reporter: require('good-console'),
+    args: [{request: '*', log: '*', error: '*'}]
+  }
+];
+
+if (config.get('papertrail')) {
+  reporters.push({
+    reporter: require('good-udp'),
+    args: [{request: '*', log: '*', error: '*'}, config.get('papertrail')]
+  });
 }
 
-server.register(require('hapi-monit'), throwIf);
+server.register([
+  {
+    register: require('good'),
+    options: {
+      reporters: reporters
+    }
+  },
+  require('hapi-monit')
+], throwIf);
 
 server.route({
   method: 'get',

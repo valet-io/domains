@@ -27,5 +27,10 @@ module.exports = require('convict')({
     env: 'HOST',
     format: String,
     default: 'localhost'
+  },
+  papertrail: {
+    env: 'PAPERTRAIL',
+    format: String,
+    default: ''
   }
 });

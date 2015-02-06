@@ -28,6 +28,7 @@
     "convict": "~0.6.1",
     "good": "~5.1.1",
     "good-console": "~4.1.0",
+    "good-udp": "~2.1.0",
     "got": "~2.3.2",
     "hapi": "~8.1.0",
     "hapi-monit": "~2.0.0",
