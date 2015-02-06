@@ -57,6 +57,15 @@ server.register({
   }
 }, throwIf);
 
+server.on('start', function () {
+  try {
+    config.validate();
+  }
+  catch (e) {
+    server.log('error', e.message); 
+  }
+});
+
 module.exports = server;
 
 function throwIf (err) {
