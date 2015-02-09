@@ -22,15 +22,18 @@
   },
   "homepage": "https://github.com/valet-io/domains",
   "dependencies": {
-    "bluebird": "2",
-    "catbox-memory": "1",
-    "good": "2.3",
-    "hapi": "6.6",
-    "hapi-monit": "~1.0.0",
-    "hoek": "2",
-    "lodash": "2",
-    "nconf": "0.6",
-    "needle": "0.7"
+    "array.prototype.find": "~1.0.0",
+    "bluebird": "~2.9.6",
+    "catbox-memory": "~1.1.1",
+    "convict": "~0.6.1",
+    "good": "~5.1.1",
+    "good-console": "~4.1.0",
+    "good-udp": "~2.1.0",
+    "got": "~2.3.2",
+    "hapi": "~8.1.0",
+    "hapi-monit": "~2.0.0",
+    "hoek": "~2.11.0",
+    "lodash.template": "~3.0.1"
   },
   "devDependencies": {
     "chai": "1",
