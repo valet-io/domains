@@ -29,8 +29,15 @@ module.exports = require('convict')({
     default: 'localhost'
   },
   papertrail: {
-    env: 'PAPERTRAIL',
-    format: String,
-    default: ''
+    endpoint: {
+      env: 'PAPERTRAIL',
+      format: String,
+      default: ''
+    },
+    threshold: {
+      env: 'PAPERTRAIL_THRESHOLD',
+      format: Number,
+      default: 10
+    }
   }
 });

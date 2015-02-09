@@ -16,10 +16,12 @@ var reporters = [
   }
 ];
 
-if (config.get('papertrail')) {
+if (config.get('papertrail.endpoint')) {
   reporters.push({
     reporter: require('good-udp'),
-    args: [{request: '*', log: '*', error: '*'}, config.get('papertrail')]
+    args: [{request: '*', log: '*', error: '*'}, config.get('papertrail.endpoint'), {
+      threshold: config.get('papertrail.threshold')
+    }]
   });
 }
 
